@@ -1,23 +1,22 @@
 import pyttsx3
 import speech_recognition as sr
-import pyaudio
 
-texto_fala = pyttsx3.init()
+engine = pyttsx3.init()
 
 def falar(audio):
-  voices = texto_fala.getProperty('voices')
-  texto_fala.setProperty('voice', voices[1].id) #Alteração de Voz
+  voices = engine.getProperty('voices')
+  engine.setProperty('voice', voices[0].id) #Alteração de Voz
 
-  texto_fala.say(audio)
-  texto_fala.runAndWait()
+  engine.say("teste")
+  engine.runAndWait()
 
-#falar("Olá a todos, meu nome é ricardo")
+falar('Olá a todos, teste')
 
 def microfone():
   r = sr.Recognizer()
 
   with sr.Microphone() as source:
-      r.pause_treshold = 1
+      r.pause_threshold = 1
       audio = r.listen(source)
   
   try:
