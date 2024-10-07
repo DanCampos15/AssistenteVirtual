@@ -1,4 +1,5 @@
 import pyttsx3
+import pyaudio
 import datetime
 import locale
 import speech_recognition as sr
@@ -42,7 +43,6 @@ def welcome_message():
    
    speak('Éllo a sua disposição, como posso ajudá-lo ?')
 
-welcome_message()
 def microphone():
   r = sr.Recognizer()
 
@@ -62,4 +62,9 @@ def microphone():
       return "None"
   return command
 
-microphone()
+if __name__ == "__main__":
+   welcome_message()
+
+   while True:
+      print("Escutando...")
+      command = microphone().lower()
