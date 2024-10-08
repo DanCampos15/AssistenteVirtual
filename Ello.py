@@ -13,7 +13,7 @@ def speak(audio):
   rate = engine.getProperty('rate')
   engine.setProperty('rate', 170)
   voices = engine.getProperty('voices')
-  engine.setProperty('voice', voices[2].id) #Alteração de Voz
+  engine.setProperty('voice', voices[1].id) #Alteração de Voz
   engine.say(audio)
   engine.runAndWait()
 
