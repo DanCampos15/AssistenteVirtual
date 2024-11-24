@@ -37,7 +37,12 @@ class AssistenteVirtual:
             "data": self.commands.date,
             "cumprimento": self.commands.greet,
             "desligar": self.commands.shutdown,
-            "clima": self.commands.weather
+            "clima": self.commands.weather,
+            "ligar_luz_sala": self.commands.turn_on_sala,
+            "desligar_luz_sala": self.commands.turn_off_sala,
+            "abrir_portao": self.commands.open_gate,
+            "fechar_portao": self.commands.close_gate
         }
+
 
 
