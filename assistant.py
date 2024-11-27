@@ -41,7 +41,9 @@ class AssistenteVirtual:
             "ligar_luz_sala": self.commands.turn_on_sala,
             "desligar_luz_sala": self.commands.turn_off_sala,
             "abrir_portao": self.commands.open_gate,
-            "fechar_portao": self.commands.close_gate
+            "fechar_portao": self.commands.close_gate,
+            "ligar_ventilador": self.commands.turn_on_fan,
+            "desligar_ventilador": self.commands.turn_off_fan
         }
 
 

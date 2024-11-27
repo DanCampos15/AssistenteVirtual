@@ -22,11 +22,12 @@ class Intent:
             "desligar_luz_quarto": ["desligar luz quarto", "apagar luz quarto", "apagar a luz do quarto", "desligar a luz do quarto"],
             "ligar_luz_cozinha": ["ligar luz cozinha", "acender luz cozinha", "ligar a luz da cozinha", "acender a luz da cozinha"],
             "desligar_luz_cozinha": ["desligar luz cozinha", "apagar luz cozinha", "apagar a luz da cozinha", "desligar a luz da cozinha"],
+            "ligar_ventilador": ["ligar ventilador", "acender ventilador", "ligar o ventilador", "acender o ventilador"],
+            "desligar_ventilador": ["desligar ventilador", "apagar ventilador", "desligar o ventilador", "apagar o ventilador"],
             "abrir_portao": ["abrir portão", "abrir portao", "abrir o portão"],
             "fechar_portao": ["fechar portão", "fechar portao", "fechar o portão"]
         }
 
-        
         # Define as palavras-chave contextuais para cada intenção
         context_keywords = {
             "fechar_portao": ["portão", "portao"],
@@ -95,6 +96,8 @@ class Command:
 
     def shutdown(self):
         self.voice.speak("Encerrando o sistema. Até logo!")
+        if self.serial_connection:
+            self.serial_connection.close()
         exit()
 
     def weather(self):
@@ -119,10 +122,24 @@ class Command:
 
     def turn_on_cozinha(self):
         self.voice.speak("Ligando luz da cozinha.")
-        self._send_to
+        self._send_to_arduino("LC")
+
     def turn_off_cozinha(self):
         self.voice.speak("Desligando luz da cozinha.")
         self._send_to_arduino("lc")
+
+    def turn_on_fan(self):
+        self.voice.speak("Ligando ventilador.")
+        response = self._send_to_arduino("Ligar Ventilador")  # Envia o comando para ligar o ventilador
+        if response:
+            self.voice.speak(response)
+
+    # Comando para desligar o ventilador
+    def turn_off_fan(self):
+        self.voice.speak("Desligando ventilador.")
+        response = self._send_to_arduino("Desligar Ventilador")  # Envia o comando para desligar o ventilador
+        if response:
+            self.voice.speak(response)
 
     def open_gate(self):
         self.voice.speak("Abrindo o portão.")
@@ -135,11 +152,3 @@ class Command:
         response = self._send_to_arduino("PF")
         if response:
             self.voice.speak(response)
-
-    def shutdown(self):
-        """Encerrando o sistema de forma segura."""
-        self.voice.speak("Encerrando o sistema. Até logo!")
-        self.listening = False  # Para o processo de escuta de voz
-        if self.serial_connection:
-            self.serial_connection.close()
-        exit()
