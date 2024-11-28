@@ -16,6 +16,8 @@
 Servo servo;
 DHT dht(DHTPIN, DHTTYPE);
 
+float TEMPERATURE_THRESHOLD = 25.0;  // Temperatura limite para acionar o relé
+
 int pos;
 
 void setup() {
@@ -53,10 +55,29 @@ void loop() {
   long duration = pulseIn(ECHO_PIN, HIGH);
   float distance = (duration * 0.034) / 2;
 
-  if (distance <= 15) { // Ajuste para a distância de segurança
+  /*if (distance <= 15) { // Ajuste para a distância de segurança
     Serial.println("Objeto encontrado!"); // Envia a mensagem para o Python
   } else {
     Serial.println("Nenhum objeto próximo.");
+  }*/
+
+  // Leitura da temperatura
+  float temp = dht.readTemperature();  // Lê a temperatura (em Celsius)
+
+  if (isnan(temp)) {
+    Serial.println("Falha ao ler o sensor DHT");
+  } else {
+    Serial.print(temp);
+    Serial.println(" C");
+
+    // Verifica se a temperatura atingiu o limite
+    if (temp >= TEMPERATURE_THRESHOLD) {
+      digitalWrite(RELAY_PIN, HIGH);  // Liga o relé
+      Serial.println("Relé ligado devido à alta temperatura.");
+    } else {
+      digitalWrite(RELAY_PIN, LOW);  // Desliga o relé
+      Serial.println("Relé desligado.");
+    }
   }
 
   // Controle de LEDs

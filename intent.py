@@ -15,7 +15,7 @@ class Intent:
             "data": ["data", "qual a data de hoje", "hoje é que dia", "dia de hoje"],
             "cumprimento": ["olá", "oi", "bom dia", "boa tarde", "saudações"],
             "desligar": ["desligar", "sair", "fechar sistema", "encerrar"],
-            "clima": ["qual a previsão do tempo", "clima", "tempo", "como está o tempo"],
+            "clima": ["qual a previsão do tempo", "clima", "tempo", "como está o tempo", "qual a"],
             "ligar_luz_sala": ["ligar luz sala", "acender luz sala", "acender a luz da sala", "ligar a luz da sala"],
             "desligar_luz_sala": ["desligar luz sala", "apagar luz sala", "apagar a luz da sala", "desligar a luz da sala"],
             "ligar_luz_quarto": ["ligar luz quarto", "acender luz quarto", "ligar a luz do quarto", "acender a luz do quarto"],
@@ -25,7 +25,7 @@ class Intent:
             "ligar_ventilador": ["ligar ventilador", "acender ventilador", "ligar o ventilador", "acender o ventilador"],
             "desligar_ventilador": ["desligar ventilador", "apagar ventilador", "desligar o ventilador", "apagar o ventilador"],
             "abrir_portao": ["abrir portão", "abrir portao", "abrir o portão"],
-            "fechar_portao": ["fechar portão", "fechar portao", "fechar o portão"]
+            "fechar_portao": ["fechar portão", "fechar portao", "fechar o portão"],
         }
 
         # Define as palavras-chave contextuais para cada intenção
@@ -101,7 +101,20 @@ class Command:
         exit()
 
     def weather(self):
-        self.voice.speak("A previsão do tempo de hoje é ensolarada, com temperatura máxima de 25 graus e mínima de 18 graus.")
+        # Envia um comando para o Arduino para obter a temperatura
+        response = self._send_to_arduino("TEMP")  # Comando que será interpretado pelo Arduino
+        if response:
+            self.voice.speak(f"A temperatura atual é {response}")  # Fala a temperatura obtida
+        else:
+            self.voice.speak("Não foi possível obter a temperatura.")
+
+    def set_temperature_threshold(self, threshold):
+        # Envia o comando para ajustar a temperatura limite no Arduino
+        response = self._send_to_arduino(f"SET_THRESHOLD:{threshold}")  # Comando para setar o limite
+        if response:
+            self.voice.speak(f"A temperatura limite foi ajustada para {threshold} graus.")
+        else:
+            self.voice.speak("Não foi possível ajustar a temperatura limite.")
 
     # Comandos para o Arduino
     def turn_on_sala(self):
