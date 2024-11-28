@@ -35,19 +35,3 @@ class Voice:
             print("Erro:", e)
             self.speak("Por favor, repita!")
             return None
-
-class Intent:
-    def detect_intent(self, command):
-        doc = nlp(command)
-        intents = {
-            "horas": ["hora", "horas", "tempo"],
-            "data": ["data", "hoje", "dia"],
-            "cumprimento": ["olá", "oi", "saudações", "alô"],
-            "desligar": ["desligar", "sair", "fechar", "encerrar"],
-            "clima": ["clima", "tempo", "previsão"]
-        }
-
-        for intent, keywords in intents.items():
-            if any(token.lemma_ in keywords for token in doc):
-                return intent
-        return "desconhecido"

@@ -45,6 +45,3 @@ class AssistenteVirtual:
             "ligar_ventilador": self.commands.turn_on_fan,
             "desligar_ventilador": self.commands.turn_off_fan
         }
-
-
-
