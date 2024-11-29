@@ -143,25 +143,17 @@ class Command:
 
     def turn_on_fan(self):
         self.voice.speak("Ligando ventilador.")
-        response = self._send_to_arduino("Ligar Ventilador")  # Envia o comando para ligar o ventilador
-        if response:
-            self.voice.speak(response)
-
+        self._send_to_arduino("Ligar Ventilador")  # Envia o comando para ligar o ventilador
+        
     # Comando para desligar o ventilador
     def turn_off_fan(self):
         self.voice.speak("Desligando ventilador.")
-        response = self._send_to_arduino("Desligar Ventilador")  # Envia o comando para desligar o ventilador
-        if response:
-            self.voice.speak(response)
-
+        self._send_to_arduino("Desligar Ventilador")  # Envia o comando para desligar o ventilador
+        
     def open_gate(self):
         self.voice.speak("Abrindo o portão.")
-        response = self._send_to_arduino("PA")
-        if response:
-            self.voice.speak(response)
-
+        self._send_to_arduino("PA")
+        
     def close_gate(self):
         self.voice.speak("Fechando o portão.")
-        response = self._send_to_arduino("PF")
-        if response:
-            self.voice.speak(response)
+        self._send_to_arduino("PF")
